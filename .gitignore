@@ -1,0 +1,14 @@
+# Local files
+/config-local.*
+
+# Temporariy, swap, log & ignored files
+/*.session
+/*.log
+/log*.txt
+*UNUSED
+*_
+*~
+.*.sw?
+*.tmp
+*.zip
+*.tgz
