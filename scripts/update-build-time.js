@@ -21,7 +21,7 @@ const scriptsPath = path.resolve(__dirname);
 const rootPath = path.resolve(path.dirname(scriptsPath));
 // const prjPath = path.resolve(path.dirname(scriptsPath));
 const prjPath = process.cwd();
-// const srcPath = path.resolve(prjPath, 'src');
+const srcPath = path.resolve(prjPath, 'src');
 const staticPath = path.resolve(prjPath, 'static');
 
 // TODO: Add local config
@@ -69,8 +69,8 @@ fs.writeFileSync(timetagFileName, buildTag, 'utf8');
 fs.writeFileSync(timestampFileName, buildTzTime, 'utf8');
 
 // Write build info data to use in the source code (if the folder already exists)...
-if (fs.existsSync(staticPath)) {
-  const buildInfoJsonFileName = path.resolve(staticPath, buildInfoJsonFilename);
+if (fs.existsSync(srcPath)) {
+  const buildInfoJsonFileName = path.resolve(srcPath, buildInfoJsonFilename);
   console.log('Creating', buildInfoJsonFilename, 'file...');
   fs.writeFileSync(buildInfoJsonFileName, JSON.stringify(getBuildInfo(), undefined, 2) + '\n', 'utf8');
 }

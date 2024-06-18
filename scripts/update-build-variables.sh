@@ -1,6 +1,6 @@
 #!/bin/sh
 # @desc Update version number & build timestamps
-# @changed 2024.03.10, 16:27
+# @changed 2024.06.12, 02:28
 
 scriptsPath=$(dirname "$(echo "$0" | sed -e 's,\\,/,g')")
 rootPath=`dirname "$scriptsPath"`
@@ -32,15 +32,17 @@ echo "Version/time: $VERSION / $TIMESTAMP"
 UPDATE_FILE() {
   FILE=$1
   if [ ! -f $FILE ]; then
-    # echo "File $FILE not exists"
+    # echo "File $FILE doesn't exists"
     return
   fi
-  EXT="${FILE##*.}" # Exract extension
-  echo "Processing file $FILE..."
+  NAME="${FILE##*/}" # Exract extension
+  EXT="${NAME##*.}" # Exract extension
+  echo "Processing file $NAME..."
   mv $FILE $FILE.bak || exit 1
   # # TODO: Replace only first occurence of `version`
-  if [ "$FILE" = "package-lock.json" ]; then # package-lock
+  if [ "$NAME" = "package-lock.json" ]; then # package-lock
     # NOTE: Update only first occurenece of verion parameter in package-lock...
+    echo "package-lock.json"
     cat $FILE.bak \
       | sed "0,/\(\"version\":\) \".*\"/{s//\1 \"$VERSION\"/}" \
     > $FILE || exit 1
@@ -76,11 +78,4 @@ UPDATE_FILE "$prjPath/.env.local"
 UPDATE_FILE "$prjPath/package.json"
 UPDATE_FILE "$prjPath/package-lock.json"
 UPDATE_FILE "$prjPath/README.md"
-UPDATE_FILE "$prjPath/public/index.html"
-UPDATE_FILE "$prjPath/public/package.json"
-UPDATE_FILE "$prjPath/public/README.md"
-UPDATE_FILE "$prjPath/public/package.json"
-UPDATE_FILE "$prjPath/server/package.json"
-UPDATE_FILE "$prjPath/server/README.md"
-UPDATE_FILE "$prjPath/dds_registration/templates/base-core.html.django"
-UPDATE_FILE "$prjPath/dds_registration/__init__.py"
+UPDATE_FILE "$prjPath/src/layouts/base.njk"
